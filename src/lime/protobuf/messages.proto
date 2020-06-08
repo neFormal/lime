@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+option csharp_namespace = "protobuf.user";
+
+enum MsgType
+{
+    ping_pong = 0;
+    auth = 1;
+}
+
+message Request
+{
+    MsgType type = 1;
+    Ping ping_pong = 2;
+    Auth auth = 3;
+}
+
+message Response
+{
+    MsgType type = 1;
+    Pong ping_pong = 2;
+    Auth.Response auth = 3;
+}
+
+message Ping
+{
+}
+
+message Pong
+{
+    uint64 time = 1;
+}
+
+message Auth
+{
+    message Response
+    {
+        enum Status
+        {
+            success = 0;
+            bad_auth = 1;
+            back_pressure = 2;
+        }
+        Status status = 1;
+        Profile profile = 2;
+    }
+
+    message PlatformAuth
+    {
+        enum PlatformType
+        {
+            google = 0;
+            apple = 1;
+        }
+        PlatformType type = 1;
+        string platform_id = 2;
+    }
+
+    message AdvData
+    {
+        string id1 = 1;
+        string id2 = 2;
+        string id3 = 3;
+    }
+
+    string id = 1;
+    repeated PlatformAuth platform_auth = 2;
+    AdvData adv_data = 3;
+}
+
+message Profile
+{
+    message LevelData
+    {
+        int32 exp = 1;
+        int32 level = 2;
+    }
+    int64 id = 1;
+    string name = 2;
+    LevelData level_data = 3;
+    repeated Item items = 4;
+}
+
+message Item
+{
+    string type = 1;
+    int32 count = 2;
+}

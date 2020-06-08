@@ -1,0 +1,2 @@
+apt install dotnet-runtime-2.1
+apt install dotnet-runtime-3.1
